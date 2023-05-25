@@ -15,12 +15,12 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'slug', 'description')
 
 
-class UserSerializer(serializers.ModelSerializer):
-    posts = serializers.StringRelatedField(many=True, read_only=True)
+# class UserSerializer(serializers.ModelSerializer):
+#     posts = serializers.StringRelatedField(many=True, read_only=True)
 
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'posts')
+#     class Meta:
+#         model = User
+#         fields = ('id', 'username', 'first_name', 'last_name', 'posts')
 
 
 class Base64ImageField(serializers.ImageField):
@@ -45,13 +45,11 @@ class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
-    post = serializers.SlugRelatedField(
-        read_only=True, slug_field='id'
-    )
 
     class Meta:
         fields = '__all__'
         model = Comment
+        read_only_fields = ('post',)
 
 
 class FollowSerializer(serializers.ModelSerializer):
